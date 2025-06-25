@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walnut Creek Home Insights</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            scroll-behavior: smooth; /* Smooth scrolling for navigation links */
+        }
+        /* Custom styles for modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #4a5568;
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            gap: 0.5rem;
+        }
+        .step-indicator > div {
+            flex-grow: 1;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+        }
+        .step-indicator > div.active {
+            background-color: #2a9d8f;
+        }
+        .message-box {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2a9d8f;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1001;
+        }
+        .message-box.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Section 1: Fixed Header -->
+    <header class="fixed top-0 left-0 w-full bg-white shadow-md z-50 p-4">
+        <nav class="container mx-auto flex items-center justify-between flex-wrap">
+            <div class="flex items-center flex-shrink-0 text-gray-800 mr-6">
+                <i class="fas fa-home text-[#2a9d8f] text-2xl mr-2"></i>
+                <span class="font-bold text-xl tracking-tight">WALNUT CREEK HOME INSIGHTS</span>
+            </div>
+            <div class="block lg:hidden">
+                <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-800 hover:border-gray-800">
+                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v15z"/></svg>
+                </button>
+            </div>
+            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden" id="nav-content">
+                <div class="text-sm lg:flex-grow">
+                    <a href="#calculator-hub" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-[#2a9d8f] mr-6">CALCULATORS</a>
+                    <a href="#how-it-works" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-[#2a9d8f] mr-6">HOW IT WORKS</a>
+                    <a href="#partners" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-[#2a9d8f]">PARTNERS</a>
+                </div>
+                <div>
+                    <a href="https://bayareapanels.com" target="_blank" class="inline-block text-sm px-5 py-2 leading-none border border-[#f4a261] rounded-xl text-white bg-[#f4a261] hover:bg-orange-600 hover:border-orange-600 transition duration-300 transform hover:scale-105 mt-4 lg:mt-0 shadow-md">
+                        Electrical Help? Visit Bay Area Panels
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Section 2: Hero Section -->
+    <section class="relative h-[60vh] md:h-[75vh] flex items-center justify-center text-center text-white overflow-hidden pt-16">
+        <div class="absolute inset-0 bg-[url('https://placehold.co/1200x800/2a9d8f/ffffff?text=Walnut+Creek+Luxury+Home')] bg-cover bg-center"></div>
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="relative z-10 p-4 md:p-8">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 drop-shadow-lg">Plan Your Walnut Creek Home Project Like a Pro</h1>
+            <p class="text-lg md:text-2xl mb-8 drop-shadow-md">Free local cost estimates for renovations, upgrades & repairs in Walnut Creek.</p>
+            <a href="#calculator-hub" class="inline-block bg-[#f4a261] text-white py-4 px-8 rounded-xl text-xl font-semibold shadow-lg hover:bg-orange-600 transition duration-300 transform hover:scale-105">
+                Explore Our 3 Free Tools
+            </a>
+            <p class="text-sm md:text-base mt-6 opacity-80">Trusted by Walnut Creek Homeowners</p>
+        </div>
+    </section>
+
+    <!-- Section 3: Calculator Hub -->
+    <section id="calculator-hub" class="py-16 md:py-24 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">Your Walnut Creek Project Calculators</h2>
+            <p class="text-xl text-center text-gray-600 mb-12">Get instant estimates &rarr; connect with vetted local experts</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Electrical Health Calculator Card -->
+                <div class="calculator-card p-6 bg-[#8ab17d] text-white rounded-xl shadow-lg flex flex-col items-center text-center transition duration-300 transform hover:scale-[1.03] cursor-pointer" data-calculator="electrical">
+                    <i class="fas fa-bolt text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Electrical Health</h3>
+                    <p class="text-lg mb-6">Know your panel risk.</p>
+                    <button class="estimate-button bg-[#f4a261] text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:bg-orange-600 transition duration-300">Estimate Project</button>
+                </div>
+
+                <!-- Kitchen Remodel Calculator Card -->
+                <div class="calculator-card p-6 bg-[#8ab17d] text-white rounded-xl shadow-lg flex flex-col items-center text-center transition duration-300 transform hover:scale-[1.03] cursor-pointer" data-calculator="kitchen">
+                    <i class="fas fa-utensils text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Kitchen Remodel</h3>
+                    <p class="text-lg mb-6">Budget your dream kitchen.</p>
+                    <button class="estimate-button bg-[#f4a261] text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:bg-orange-600 transition duration-300">Estimate Project</button>
+                </div>
+
+                <!-- Landscape Design Calculator Card -->
+                <div class="calculator-card p-6 bg-[#8ab17d] text-white rounded-xl shadow-lg flex flex-col items-center text-center transition duration-300 transform hover:scale-[1.03] cursor-pointer" data-calculator="landscape">
+                    <i class="fas fa-tree text-5xl mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Landscape Design</h3>
+                    <p class="text-lg mb-6">Cost your outdoor oasis.</p>
+                    <button class="estimate-button bg-[#f4a261] text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:bg-orange-600 transition duration-300">Estimate Project</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: How It Works -->
+    <section id="how-it-works" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-8 text-gray-800">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="p-6 rounded-xl shadow-md bg-gray-50">
+                    <i class="fas fa-mouse-pointer text-5xl text-[#2a9d8f] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">1. Choose Your Calculator</h3>
+                    <p class="text-gray-700">Select the home project you're planning from our specialized Walnut Creek tools.</p>
+                </div>
+                <div class="p-6 rounded-xl shadow-md bg-gray-50">
+                    <i class="fas fa-keyboard text-5xl text-[#2a9d8f] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">2. Input Details</h3>
+                    <p class="text-gray-700">Answer a few simple questions about your project for a personalized estimate.</p>
+                </div>
+                <div class="p-6 rounded-xl shadow-md bg-gray-50">
+                    <i class="fas fa-handshake text-5xl text-[#2a9d8f] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">3. Get Estimate & Connect</h3>
+                    <p class="text-gray-700">Receive an instant estimate and optional connection to vetted local Walnut Creek experts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Partners -->
+    <section id="partners" class="py-16 md:py-24 bg-gray-100">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-8 text-gray-800">Our Trusted Walnut Creek Partners</h2>
+            <p class="text-xl text-gray-600 mb-12">We connect you with reliable professionals dedicated to quality service in Walnut Creek.</p>
+            <div class="flex flex-wrap justify-center items-center gap-8">
+                <!-- Placeholder for Bay Area Panels Logo -->
+                <div class="p-4 bg-white rounded-lg shadow-md w-40 h-24 flex items-center justify-center">
+                    <span class="text-gray-500 font-semibold text-center">Bay Area Panels Logo</span>
+                </div>
+                <!-- Placeholder for Walnut Creek Landscapes Logo -->
+                <div class="p-4 bg-white rounded-lg shadow-md w-40 h-24 flex items-center justify-center">
+                    <span class="text-gray-500 font-semibold text-center">Walnut Creek Landscapes Logo</span>
+                </div>
+                <!-- Placeholder for Walnut Creek Remodelers Logo -->
+                <div class="p-4 bg-white rounded-lg shadow-md w-40 h-24 flex items-center justify-center">
+                    <span class="text-gray-500 font-semibold text-center">Walnut Creek Remodelers Logo</span>
+                </div>
+                <!-- Add more partner logos as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#2a9d8f] text-white py-8 text-center">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 Walnut Creek Home Insights. All rights reserved.</p>
+            <p class="text-sm mt-2">Estimates are for informational purposes only. Consult licensed professionals for exact quotes.</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+
+    <!-- Electrical Health Calculator Modal -->
+    <div id="electricalCalculatorModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button" data-modal="electrical">&times;</span>
+            <div class="step-indicator">
+                <div id="electricalStep1Indicator" class="active"></div>
+                <div id="electricalStep2Indicator"></div>
+                <div id="electricalStep3Indicator"></div>
+            </div>
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">Electrical Health Calculator</h2>
+
+            <!-- Step 1: Inputs -->
+            <div id="electricalStep1">
+                <p class="mb-6 text-lg text-gray-600">Step 1 of 3: Tell us about your Walnut Creek home's electrical system.</p>
+                <div class="mb-6"><label for="homeAge" class="block text-gray-700 text-sm font-semibold mb-2">Home Age</label><select id="homeAge" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"><option value="unknown">Select home age</option><option value="pre1950">Pre-1950</option><option value="1950-1980" selected>1950-1980</option><option value="1980-2000">1980-2000</option><option value="2000-present">2000-Present</option></select></div>
+                <div class="mb-6"><label for="panelBrand" class="block text-gray-700 text-sm font-semibold mb-2">Main Electrical Panel Brand</label><select id="panelBrand" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"><option value="unknown">Select panel brand</option><option value="square-d">Square D</option><option value="ge">GE</option><option value="cutler-hammer">Cutler-Hammer</option><option value="federal-pacific">Federal Pacific (Stab-Lok)</option><option value="challenger">Challenger</option><option value="other">Other</option></select></div>
+                <div class="mb-6"><label for="amperage" class="block text-gray-700 text-sm font-semibold mb-2">Current Amperage</label><select id="amperage" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"><option value="unknown">Select amperage</option><option value="60">60 Amp</option><option value="100" selected>100 Amp</option><option value="150">150 Amp</option><option value="200">200 Amp</option><option value="more-200">More than 200 Amp</option></select></div>
+                <div class="mb-6"><label for="panelType" class="block text-gray-700 text-sm font-semibold mb-2">Panel Type</label><select id="panelType" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"><option value="breaker" selected>Breaker Panel</option><option value="fuse">Fuse Box</option></select></div>
+                <div class="mb-6"><label class="block text-gray-700 text-sm font-semibold mb-2">Conditions & Future Plans</label><div class="flex items-center mb-3"><input type="checkbox" id="recentRemodels" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="recentRemodels" class="text-gray-800">Had recent major remodels (e.g., kitchen, ADU, EV charger)?</label></div><div class="flex items-center mb-3"><input type="checkbox" id="electricalIssues" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="electricalIssues" class="text-gray-800">Experiencing electrical issues (flickering, tripping breakers, burning smells)?</label></div></div>
+                <div class="mb-6"><label class="block text-gray-700 text-sm font-semibold mb-2">Primary Reason for Using This Calculator?</label><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div class="flex items-center"><input type="checkbox" id="reasonCuriosity" name="reason" value="curiosity" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="reasonCuriosity" class="text-gray-800">General Curiosity/Home Maintenance</label></div><div class="flex items-center"><input type="checkbox" id="reasonTripping" name="reason" value="tripping" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="reasonTripping" class="text-gray-800">Frequent Tripping Breakers / Flickering Lights</label></div><div class="flex items-center"><input type="checkbox" id="reasonEV" name="reason" value="ev" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="reasonEV" class="text-gray-800">Adding an EV Charger</label></div><div class="flex items-center"><input type="checkbox" id="reasonRemodel" name="reason" value="remodel" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="reasonRemodel" class="text-gray-800">Planning a Major Remodel</label></div><div class="flex items-center"><input type="checkbox" id="reasonInspection" name="reason" value="inspection" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="reasonInspection" class="text-gray-800">Home Inspection Recommendation</label></div><div class="flex items-center"><input type="checkbox" id="reasonSolar" name="reason" value="solar" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="reasonSolar" class="text-gray-800">Considering Solar or Battery Storage</label></div><div class="flex items-center"><input type="checkbox" id="reasonSmells" name="reason" value="smells" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="reasonSmells" class="text-gray-800">Burning Smells or Electrical Sounds</label></div><div class="flex items-center"><input type="checkbox" id="reasonOtherCheckbox" name="reason" value="other" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="reasonOtherCheckbox" class="text-gray-800">Other</label></div></div><textarea id="reasonOtherText" class="mt-3 w-full p-3 border border-gray-300 rounded-lg hidden focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" placeholder="Please specify your reason"></textarea></div>
+                <div class="mb-6"><label class="block text-gray-700 text-sm font-semibold mb-2">What large electrical appliances or features do you have or plan to add?</label><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div class="flex items-center"><input type="checkbox" id="applianceAC" name="appliance" value="ac" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="applianceAC" class="text-gray-800">Central Air Conditioning (AC)</label></div><div class="flex items-center"><input type="checkbox" id="applianceEV" name="appliance" value="ev" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="applianceEV" class="text-gray-800">Electric Vehicle (EV)</label></div><div class="flex items-center"><input type="checkbox" id="applianceWaterHeater" name="appliance" value="water-heater" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="applianceWaterHeater" class="text-gray-800">Electric Water Heater</label></div><div class="flex items-center"><input type="checkbox" id="applianceRange" name="appliance" value="range" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="applianceRange" class="text-gray-800">Electric Range/Stove</label></div><div class="flex items-center"><input type="checkbox" id="applianceDryer" name="appliance" value="dryer" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="applianceDryer" class="text-gray-800">Electric Clothes Dryer</label></div><div class="flex items-center"><input type="checkbox" id="applianceHotTub" name="appliance" value="hot-tub" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="applianceHotTub" class="text-gray-800">Hot Tub / Spa</label></div><div class="flex items-center"><input type="checkbox" id="applianceSolarExisting" name="appliance" value="solar-existing" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="applianceSolarExisting" class="text-gray-800">Existing Solar Panels</label></div></div></div>
+                <div class="mb-6"><label class="block text-gray-700 text-sm font-semibold mb-2">Are you interested in a free, no-obligation electrical inspection or quote from Bay Area Panels?</label><div class="flex items-center mb-2"><input type="radio" id="interestYes" name="interestLevel" value="yes" class="h-5 w-5 text-[#2a9d8f] focus:ring-[#2a9d8f] mr-3"><label for="interestYes" class="text-gray-800">Yes, please contact me for a free inspection/quote.</label></div><div class="flex items-center"><input type="radio" id="interestNo" name="interestLevel" value="no" class="h-5 w-5 text-[#2a9d8f] focus:ring-[#2a9d8f] mr-3"><label for="interestNo" class="text-gray-800">No, I'm just looking for an estimate for now.</label></div></div>
+                <button id="calculateElectricalButton" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Calculate</button>
+            </div>
+
+            <!-- Step 2: Results -->
+            <div id="electricalStep2" class="hidden">
+                <p class="mb-6 text-lg text-gray-600">Step 2 of 3: Your estimated results.</p>
+                <h3 id="electricalResultsHeadline" class="text-2xl font-bold mb-4 text-gray-800"></h3>
+                <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                    <li id="electricalKeyFinding"></li>
+                    <li id="electricalCostTimeline"></li>
+                    <li id="electricalWalnutCreekTip"></li>
+                </ul>
+                <p class="text-sm text-gray-500 mb-8">Estimates use aggregated Walnut Creek electrical project data. For an exact, binding quote and a thorough safety assessment, please consult Bay Area Panels directly.</p>
+                <button id="getElectricalQuoteButton" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Get a Free Quote</button>
+            </div>
+
+            <!-- Step 3: Lead Capture -->
+            <div id="electricalStep3" class="hidden">
+                <p class="mb-6 text-lg text-gray-600">Step 3 of 3: Connect with local experts.</p>
+                <h3 class="text-2xl font-bold mb-6 text-gray-800">Get a Free Electrical Inspection & Custom Quote from Bay Area Panels</h3>
+                <form id="electricalLeadCaptureForm">
+                    <div class="mb-4"><label for="electricalFullName" class="block text-gray-700 text-sm font-semibold mb-2">Full Name <span class="text-red-500">*</span></label><input type="text" id="electricalFullName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="electricalEmail" class="block text-gray-700 text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label><input type="email" id="electricalEmail" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="electricalPhone" class="block text-gray-700 text-sm font-semibold mb-2">Phone <span class="text-red-500">*</span></label><input type="tel" id="electricalPhone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-6"><label for="electricalAddress" class="block text-gray-700 text-sm font-semibold mb-2">Walnut Creek Project Address <span class="text-red-500">*</span></label><input type="text" id="electricalAddress" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-6 flex items-start"><input type="checkbox" id="sendToBayAreaPanels" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3 mt-1" checked disabled><label for="sendToBayAreaPanels" class="text-gray-800 font-medium">Yes, please send my details to Bay Area Panels to schedule my free inspection/quote.</label></div>
+                    <button type="submit" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Connect Me with Bay Area Panels &rarr;</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kitchen Remodel Calculator Modal -->
+    <div id="kitchenCalculatorModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button" data-modal="kitchen">&times;</span>
+            <div class="step-indicator">
+                <div id="kitchenStep1Indicator" class="active"></div>
+                <div id="kitchenStep2Indicator"></div>
+                <div id="kitchenStep3Indicator"></div>
+            </div>
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">Kitchen Remodel Calculator</h2>
+
+            <!-- Step 1: Inputs -->
+            <div id="kitchenStep1">
+                <p class="mb-6 text-lg text-gray-600">Step 1 of 3: Let's estimate your dream kitchen for Walnut Creek.</p>
+                <div class="mb-6"><label for="kitchenSize" class="block text-gray-700 text-sm font-semibold mb-2">Kitchen Size</label><select id="kitchenSize" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"><option value="small">Small (under 100 sq ft)</option><option value="medium">Medium (100-250 sq ft)</option><option value="large">Large (over 250 sq ft)</option></select></div>
+                <div class="mb-6"><label for="kitchenFinish" class="block text-gray-700 text-sm font-semibold mb-2">Finish Level</label><select id="kitchenFinish" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"><option value="basic">Basic (Refreshed)</option><option value="mid-range">Mid-Range (New Cabinets/Counters)</option><option value="luxury">Luxury (Custom, High-End)</option></select></div>
+                <div class="mb-6"><label for="countertopMaterial" class="block text-gray-700 text-sm font-semibold mb-2">Countertop Material</label><select id="countertopMaterial" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"><option value="laminate">Laminate</option><option value="quartz-granite">Quartz/Granite</option><option value="marble">Marble/High-End Stone</option></select></div>
+                <div class="mb-6"><label for="newAppliances" class="block text-gray-700 text-sm font-semibold mb-2">New Appliances?</label><select id="newAppliances" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"><option value="no">No, keeping existing</option><option value="mid-range">Yes, mid-range appliances</option><option value="high-end">Yes, high-end appliances</option></select></div>
+                <button id="calculateKitchenButton" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Calculate</button>
+            </div>
+
+            <!-- Step 2: Results -->
+            <div id="kitchenStep2" class="hidden">
+                <p class="mb-6 text-lg text-gray-600">Step 2 of 3: Your estimated results.</p>
+                <h3 id="kitchenResultsHeadline" class="text-2xl font-bold mb-4 text-gray-800"></h3>
+                <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                    <li id="kitchenKeyFinding"></li>
+                    <li id="kitchenCostTimeline"></li>
+                    <li id="kitchenWalnutCreekTip"></li>
+                </ul>
+                <p class="text-sm text-gray-500 mb-8">Estimates use aggregated Walnut Creek kitchen remodel data. Consult local remodelers for exact quotes.</p>
+                <button id="getKitchenQuoteButton" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Get a Free Quote</button>
+            </div>
+
+            <!-- Step 3: Lead Capture -->
+            <div id="kitchenStep3" class="hidden">
+                <p class="mb-6 text-lg text-gray-600">Step 3 of 3: Connect with local experts.</p>
+                <h3 class="text-2xl font-bold mb-6 text-gray-800">Get a Free Quote from Walnut Creek Remodelers</h3>
+                <form id="kitchenLeadCaptureForm">
+                    <div class="mb-4"><label for="kitchenFullName" class="block text-gray-700 text-sm font-semibold mb-2">Full Name <span class="text-red-500">*</span></label><input type="text" id="kitchenFullName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="kitchenEmail" class="block text-gray-700 text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label><input type="email" id="kitchenEmail" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="kitchenPhone" class="block text-gray-700 text-sm font-semibold mb-2">Phone</label><input type="tel" id="kitchenPhone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
+                    <div class="mb-6"><label for="kitchenAddress" class="block text-gray-700 text-sm font-semibold mb-2">Walnut Creek Project Address</label><input type="text" id="kitchenAddress" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
+                    <div class="mb-6 flex items-start"><input type="checkbox" id="kitchenSendToBayAreaPanels" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3 mt-1"><label for="kitchenSendToBayAreaPanels" class="text-gray-800 font-medium">Also send my details to Bay Area Panels (for electrical upgrade needs).</label></div>
+                    <button type="submit" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Connect Me with Experts &rarr;</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Landscape Design Calculator Modal -->
+    <div id="landscapeCalculatorModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button" data-modal="landscape">&times;</span>
+            <div class="step-indicator">
+                <div id="landscapeStep1Indicator" class="active"></div>
+                <div id="landscapeStep2Indicator"></div>
+                <div id="landscapeStep3Indicator"></div>
+            </div>
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">Landscape Design Calculator</h2>
+
+            <!-- Step 1: Inputs -->
+            <div id="landscapeStep1">
+                <p class="mb-6 text-lg text-gray-600">Step 1 of 3: Visualize and cost your outdoor oasis for Walnut Creek.</p>
+                <div class="mb-6"><label for="yardSize" class="block text-gray-700 text-sm font-semibold mb-2">Yard Size (sq ft)</label><input type="number" id="yardSize" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" value="1000"></div>
+                <div class="mb-6"><label for="landscapeStyle" class="block text-gray-700 text-sm font-semibold mb-2">Desired Style</label><select id="landscapeStyle" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"><option value="modern">Modern/Minimalist</option><option value="drought-tolerant">Drought-Tolerant/Native</option><option value="traditional">Traditional/Lush</option></select></div>
+                <div class="mb-6"><label class="block text-gray-700 text-sm font-semibold mb-2">Key Features</label><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div class="flex items-center"><input type="checkbox" id="featurePatioDeck" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="featurePatioDeck" class="text-gray-800">New Patio/Deck</label></div><div class="flex items-center"><input type="checkbox" id="featureOutdoorLighting" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="featureOutdoorLighting" class="text-gray-800">Outdoor Lighting</label></div><div class="flex items-center"><input type="checkbox" id="featureIrrigation" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="featureIrrigation" class="text-gray-800">Smart Irrigation System</label></div><div class="flex items-center"><input type="checkbox" id="featureOutdoorKitchen" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3"><label for="featureOutdoorKitchen" class="text-gray-800">Outdoor Kitchen/BBQ</label></div></div></div>
+                <button id="calculateLandscapeButton" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Calculate</button>
+            </div>
+
+            <!-- Step 2: Results -->
+            <div id="landscapeStep2" class="hidden">
+                <p class="mb-6 text-lg text-gray-600">Step 2 of 3: Your estimated results.</p>
+                <h3 id="landscapeResultsHeadline" class="text-2xl font-bold mb-4 text-gray-800"></h3>
+                <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                    <li id="landscapeKeyFinding"></li>
+                    <li id="landscapeCostTimeline"></li>
+                    <li id="landscapeWalnutCreekTip"></li>
+                </ul>
+                <p class="text-sm text-gray-500 mb-8">Estimates use aggregated Walnut Creek landscaping data. Consult local landscapers for exact quotes.</p>
+                <button id="getLandscapeQuoteButton" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Get a Free Quote</button>
+            </div>
+
+            <!-- Step 3: Lead Capture -->
+            <div id="landscapeStep3" class="hidden">
+                <p class="mb-6 text-lg text-gray-600">Step 3 of 3: Connect with local experts.</p>
+                <h3 class="text-2xl font-bold mb-6 text-gray-800">Get a Free Quote from Walnut Creek Landscapers</h3>
+                <form id="landscapeLeadCaptureForm">
+                    <div class="mb-4"><label for="landscapeFullName" class="block text-gray-700 text-sm font-semibold mb-2">Full Name <span class="text-red-500">*</span></label><input type="text" id="landscapeFullName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="landscapeEmail" class="block text-gray-700 text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label><input type="email" id="landscapeEmail" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="landscapePhone" class="block text-gray-700 text-sm font-semibold mb-2">Phone</label><input type="tel" id="landscapePhone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
+                    <div class="mb-6"><label for="landscapeAddress" class="block text-gray-700 text-sm font-semibold mb-2">Walnut Creek Project Address</label><input type="text" id="landscapeAddress" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
+                    <div class="mb-6 flex items-start"><input type="checkbox" id="landscapeSendToBayAreaPanels" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3 mt-1"><label for="landscapeSendToBayAreaPanels" class="text-gray-800 font-medium">Also send my details to Bay Area Panels (for outdoor lighting electrical needs).</label></div>
+                    <button type="submit" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Connect Me with Experts &rarr;</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Message Box -->
+    <div id="messageBox" class="message-box"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Nav Toggle
+            const navToggle = document.getElementById('nav-toggle');
+            const navContent = document.getElementById('nav-content');
+            navToggle.addEventListener('click', () => {
+                navContent.classList.toggle('hidden');
+            });
+            // Smooth scroll for nav links (hide nav on mobile after click)
+            document.querySelectorAll('#nav-content a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!navContent.classList.contains('hidden')) {
+                        navContent.classList.add('hidden');
+                    }
+                });
+            });
+
+
+            // --- General Modal Handling ---
+            const calculatorCards = document.querySelectorAll('.calculator-card');
+            const modals = {
+                electrical: document.getElementById('electricalCalculatorModal'),
+                kitchen: document.getElementById('kitchenCalculatorModal'),
+                landscape: document.getElementById('landscapeCalculatorModal')
+            };
+
+            const closeButtons = document.querySelectorAll('.modal-content .close-button');
+            const messageBox = document.getElementById('messageBox');
+
+            let currentOpenModal = null; // Track which modal is currently open
+
+            function showMessage(message) {
+                messageBox.textContent = message;
+                messageBox.classList.add('show');
+                setTimeout(() => {
+                    messageBox.classList.remove('show');
+                }, 3000);
+            }
+
+            // Open Modal
+            calculatorCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    const calculatorType = card.dataset.calculator;
+                    currentOpenModal = modals[calculatorType];
+                    currentOpenModal.classList.add('show');
+                    resetCalculatorState(calculatorType); // Reset specific calculator's state
+                });
+            });
+
+            // Close Modal
+            closeButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const calculatorType = button.dataset.modal;
+                    modals[calculatorType].classList.remove('show');
+                    currentOpenModal = null;
+                });
+            });
+
+            // Close modal on outside click
+            Object.values(modals).forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('show');
+                        currentOpenModal = null;
+                    }
+                });
+            });
+
+            // --- Calculator-specific Logic ---
+
+            // Electrical Calculator Elements
+            const electricalStep1 = document.getElementById('electricalStep1');
+            const electricalStep2 = document.getElementById('electricalStep2');
+            const electricalStep3 = document.getElementById('electricalStep3');
+            const electricalStep1Indicator = document.getElementById('electricalStep1Indicator');
+            const electricalStep2Indicator = document.getElementById('electricalStep2Indicator');
+            const electricalStep3Indicator = document.getElementById('electricalStep3Indicator');
+            const calculateElectricalButton = document.getElementById('calculateElectricalButton');
+            const getElectricalQuoteButton = document.getElementById('getElectricalQuoteButton');
+            const electricalLeadCaptureForm = document.getElementById('electricalLeadCaptureForm');
+            const electricalResultsHeadline = document.getElementById('electricalResultsHeadline');
+            const electricalKeyFinding = document.getElementById('electricalKeyFinding');
+            const electricalCostTimeline = document.getElementById('electricalCostTimeline');
+            const electricalWalnutCreekTip = document.getElementById('electricalWalnutCreekTip');
+
+            const electricalHomeAge = document.getElementById('homeAge');
+            const electricalPanelBrand = document.getElementById('panelBrand');
+            const electricalAmperage = document.getElementById('amperage');
+            const electricalPanelType = document.getElementById('panelType');
+            const electricalRecentRemodels = document.getElementById('recentRemodels');
+            const electricalElectricalIssues = document.getElementById('electricalIssues');
+            const electricalReasonOtherCheckbox = document.getElementById('reasonOtherCheckbox');
+            const electricalReasonOtherText = document.getElementById('reasonOtherText');
+
+            // Kitchen Calculator Elements
+            const kitchenStep1 = document.getElementById('kitchenStep1');
+            const kitchenStep2 = document.getElementById('kitchenStep2');
+            const kitchenStep3 = document.getElementById('kitchenStep3');
+            const kitchenStep1Indicator = document.getElementById('kitchenStep1Indicator');
+            const kitchenStep2Indicator = document.getElementById('kitchenStep2Indicator');
+            const kitchenStep3Indicator = document.getElementById('kitchenStep3Indicator');
+            const calculateKitchenButton = document.getElementById('calculateKitchenButton');
+            const getKitchenQuoteButton = document.getElementById('getKitchenQuoteButton');
+            const kitchenLeadCaptureForm = document.getElementById('kitchenLeadCaptureForm');
+            const kitchenResultsHeadline = document.getElementById('kitchenResultsHeadline');
+            const kitchenKeyFinding = document.getElementById('kitchenKeyFinding');
+            const kitchenCostTimeline = document.getElementById('kitchenCostTimeline');
+            const kitchenWalnutCreekTip = document.getElementById('kitchenWalnutCreekTip');
+
+            // Landscape Calculator Elements
+            const landscapeStep1 = document.getElementById('landscapeStep1');
+            const landscapeStep2 = document.getElementById('landscapeStep2');
+            const landscapeStep3 = document.getElementById('landscapeStep3');
+            const landscapeStep1Indicator = document.getElementById('landscapeStep1Indicator');
+            const landscapeStep2Indicator = document.getElementById('landscapeStep2Indicator');
+            const landscapeStep3Indicator = document.getElementById('landscapeStep3Indicator');
+            const calculateLandscapeButton = document.getElementById('calculateLandscapeButton');
+            const getLandscapeQuoteButton = document.getElementById('getLandscapeQuoteButton');
+            const landscapeLeadCaptureForm = document.getElementById('landscapeLeadCaptureForm');
+            const landscapeResultsHeadline = document.getElementById('landscapeResultsHeadline');
+            const landscapeKeyFinding = document.getElementById('landscapeKeyFinding');
+            const landscapeCostTimeline = document.getElementById('landscapeCostTimeline');
+            const landscapeWalnutCreekTip = document.getElementById('landscapeWalnutCreekTip');
+
+
+            // Function to manage step visibility for a given calculator
+            function updateStepVisibility(calculatorType, stepNumber) {
+                let s1, s2, s3, ind1, ind2, ind3;
+
+                switch (calculatorType) {
+                    case 'electrical':
+                        s1 = electricalStep1; s2 = electricalStep2; s3 = electricalStep3;
+                        ind1 = electricalStep1Indicator; ind2 = electricalStep2Indicator; ind3 = electricalStep3Indicator;
+                        break;
+                    case 'kitchen':
+                        s1 = kitchenStep1; s2 = kitchenStep2; s3 = kitchenStep3;
+                        ind1 = kitchenStep1Indicator; ind2 = kitchenStep2Indicator; ind3 = kitchenStep3Indicator;
+                        break;
+                    case 'landscape':
+                        s1 = landscapeStep1; s2 = landscapeStep2; s3 = landscapeStep3;
+                        ind1 = landscapeStep1Indicator; ind2 = landscapeStep2Indicator; ind3 = landscapeStep3Indicator;
+                        break;
+                }
+
+                [s1, s2, s3].forEach(el => el.classList.add('hidden'));
+                [ind1, ind2, ind3].forEach(el => el.classList.remove('active'));
+
+                if (stepNumber === 1) {
+                    s1.classList.remove('hidden');
+                    ind1.classList.add('active');
+                } else if (stepNumber === 2) {
+                    s2.classList.remove('hidden');
+                    ind1.classList.add('active');
+                    ind2.classList.add('active');
+                } else if (stepNumber === 3) {
+                    s3.classList.remove('hidden');
+                    ind1.classList.add('active');
+                    ind2.classList.add('active');
+                    ind3.classList.add('active');
+                }
+            }
+
+            // Function to reset a specific calculator's state
+            function resetCalculatorState(calculatorType) {
+                switch (calculatorType) {
+                    case 'electrical':
+                        electricalHomeAge.value = '1950-1980';
+                        electricalPanelBrand.value = 'unknown';
+                        electricalAmperage.value = '100';
+                        electricalPanelType.value = 'breaker';
+                        electricalRecentRemodels.checked = false;
+                        electricalElectricalIssues.checked = false;
+                        document.querySelectorAll('#electricalStep1 input[name="reason"]:checked').forEach(cb => cb.checked = false);
+                        document.querySelectorAll('#electricalStep1 input[name="appliance"]:checked').forEach(cb => cb.checked = false);
+                        document.querySelectorAll('#electricalStep1 input[name="interestLevel"]').forEach(radio => radio.checked = false);
+                        electricalReasonOtherCheckbox.checked = false;
+                        electricalReasonOtherText.classList.add('hidden');
+                        electricalReasonOtherText.value = '';
+                        electricalResultsHeadline.textContent = '';
+                        electricalKeyFinding.textContent = '';
+                        electricalCostTimeline.textContent = '';
+                        electricalWalnutCreekTip.textContent = '';
+                        electricalLeadCaptureForm.reset();
+                        document.getElementById('sendToBayAreaPanels').checked = true; // Ensure always checked & disabled for electrical
+                        break;
+                    case 'kitchen':
+                        document.getElementById('kitchenSize').value = 'small';
+                        document.getElementById('kitchenFinish').value = 'basic';
+                        document.getElementById('countertopMaterial').value = 'laminate';
+                        document.getElementById('newAppliances').value = 'no';
+                        kitchenResultsHeadline.textContent = '';
+                        kitchenKeyFinding.textContent = '';
+                        kitchenCostTimeline.textContent = '';
+                        kitchenWalnutCreekTip.textContent = '';
+                        kitchenLeadCaptureForm.reset();
+                        document.getElementById('kitchenSendToBayAreaPanels').checked = false; // Ensure unchecked by default
+                        break;
+                    case 'landscape':
+                        document.getElementById('yardSize').value = '1000';
+                        document.getElementById('landscapeStyle').value = 'modern';
+                        document.getElementById('featurePatioDeck').checked = false;
+                        document.getElementById('featureOutdoorLighting').checked = false;
+                        document.getElementById('featureIrrigation').checked = false;
+                        document.getElementById('featureOutdoorKitchen').checked = false;
+                        landscapeResultsHeadline.textContent = '';
+                        landscapeKeyFinding.textContent = '';
+                        landscapeCostTimeline.textContent = '';
+                        landscapeWalnutCreekTip.textContent = '';
+                        landscapeLeadCaptureForm.reset();
+                        document.getElementById('landscapeSendToBayAreaPanels').checked = false; // Ensure unchecked by default
+                        break;
+                }
+                updateStepVisibility(calculatorType, 1);
+            }
+
+
+            // --- ELECTRICAL CALCULATOR LOGIC ---
+            electricalReasonOtherCheckbox.addEventListener('change', () => {
+                if (electricalReasonOtherCheckbox.checked) {
+                    electricalReasonOtherText.classList.remove('hidden');
+                } else {
+                    electricalReasonOtherText.classList.add('hidden');
+                    electricalReasonOtherText.value = '';
+                }
+            });
+
+            calculateElectricalButton.addEventListener('click', () => {
+                const homeAge = electricalHomeAge.value;
+                const panelBrand = electricalPanelBrand.value;
+                const amperage = electricalAmperage.value;
+                const panelType = electricalPanelType.value;
+                const recentRemodels = electricalRecentRemodels.checked;
+                const electricalIssues = electricalElectricalIssues.checked;
+
+                const selectedReasons = Array.from(document.querySelectorAll('#electricalStep1 input[name="reason"]:checked'))
+                                            .map(cb => cb.value === 'other' ? electricalReasonOtherText.value : cb.value);
+                const selectedAppliances = Array.from(document.querySelectorAll('#electricalStep1 input[name="appliance"]:checked'))
+                                                .map(cb => cb.value);
+                const interestLevel = document.querySelector('#electricalStep1 input[name="interestLevel"]:checked')?.value || 'not-specified';
+
+                let riskLevel = '✅ Safe';
+                let finding = "Your electrical system appears healthy for your current needs.";
+                let costRange = "Inspection/Minor Repair: ~$200-$1,500";
+                let timeline = "1-3 days (inspection/minor repair)";
+
+                // Prioritize severe issues
+                if (panelBrand === 'federal-pacific' || panelBrand === 'challenger' || panelType === 'fuse') {
+                    riskLevel = '❌ Urgent Upgrade';
+                    finding = `Immediate panel replacement recommended due to hazardous brand (${panelBrand === 'fuse' ? 'outdated fuse box' : panelBrand}) for your Walnut Creek home.`;
+                    costRange = "Panel Upgrade: ~$4,000-$12,000+ (depending on specific needs and appliance additions)";
+                    timeline = "3-10 days (panel upgrade, considering permitting)";
+                } else if (electricalIssues || selectedReasons.includes('tripping') || selectedReasons.includes('smells')) {
+                    riskLevel = '⚠️ Caution';
+                    finding = "Warning signs indicate potential issues. Professional inspection is highly recommended.";
+                    costRange = "Inspection/Minor Repair: ~$200-$1,500. Potentially Panel Upgrade: ~$4,000-$8,000";
+                    timeline = "1-3 days (inspection/minor repair), up to 7 days for panel upgrade";
+                } else if (amperage === '60') {
+                    riskLevel = '⚠️ Caution';
+                    finding = "60 Amp service is insufficient for modern Walnut Creek homes. An upgrade is highly recommended.";
+                    costRange = "Panel Upgrade: ~$4,000-$8,000";
+                    timeline = "3-7 days (panel upgrade)";
+                } else if (amperage === '100' && (recentRemodels || selectedReasons.includes('remodel') || selectedReasons.includes('ev') || selectedReasons.includes('solar'))) {
+                    riskLevel = '⚠️ Caution';
+                    finding = "100 Amp service may be strained by recent remodels or planned additions (like EV charging, solar). Consider an upgrade for future needs.";
+                    costRange = "Panel Upgrade: ~$4,000-$10,000+ (especially for EV/solar readiness)";
+                    timeline = "3-7 days (panel upgrade)";
+                }
+
+                // Adjust cost/finding for specific new appliances if no critical existing issue
+                if (riskLevel !== '❌ Urgent Upgrade') {
+                    if (selectedAppliances.includes('ev') && parseInt(amperage) < 200) {
+                        riskLevel = riskLevel === '✅ Safe' ? '⚠️ Caution' : riskLevel;
+                        finding = (finding === "Your electrical system appears healthy for your current needs." ? "" : finding + " Also, ") + "Adding an EV charger will likely require a service upgrade to at least 200 Amps for optimal performance.";
+                        costRange = "Panel Upgrade (200 Amp): ~$6,000-$12,000+ (includes EV circuit)";
+                        timeline = "3-10 days (panel upgrade)";
+                    } else if (selectedAppliances.length > 0) {
+                         riskLevel = riskLevel === '✅ Safe' ? '⚠️ Caution' : riskLevel;
+                         finding = (finding === "Your electrical system appears healthy for your current needs." ? "" : finding + " Additionally, ") + `Large appliances like ${selectedAppliances.map(a => a.replace('-', ' ')).join(', ')} may strain older panels.`;
+                         costRange = "Inspection/Minor Upgrade: ~$500-$3,000. Potential Panel Upgrade: ~$4,000-$8,000";
+                         timeline = "1-7 days";
+                    }
+                }
+
+
+                electricalResultsHeadline.textContent = `Walnut Creek Electrical Health: ${riskLevel} Status!`;
+                electricalKeyFinding.textContent = finding;
+                electricalCostTimeline.textContent = `Estimated Cost: ${costRange}. Typical Timeline: ${timeline}.`;
+                electricalWalnutCreekTip.textContent = "Walnut Creek permits apply for most electrical panel upgrades and new circuit installations. Bay Area Panels handles compliance. A free inspection is highly recommended for an exact quote, safety assessment, and to discuss EV/Solar readiness for your Walnut Creek home.";
+
+                updateStepVisibility('electrical', 2);
+            });
+
+            getElectricalQuoteButton.addEventListener('click', () => {
+                updateStepVisibility('electrical', 3);
+            });
+
+            electricalLeadCaptureForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const formData = {
+                    fullName: document.getElementById('electricalFullName').value,
+                    email: document.getElementById('electricalEmail').value,
+                    phone: document.getElementById('electricalPhone').value,
+                    address: document.getElementById('electricalAddress').value,
+                    calculatorUsed: 'Electrical Health',
+                    userInterestLevel: document.querySelector('#electricalStep1 input[name="interestLevel"]:checked')?.value || 'not-specified',
+                    primaryReason: Array.from(document.querySelectorAll('#electricalStep1 input[name="reason"]:checked')).map(cb => cb.value === 'other' ? electricalReasonOtherText.value : cb.value),
+                    largeAppliances: Array.from(document.querySelectorAll('#electricalStep1 input[name="appliance"]:checked')).map(cb => cb.value),
+                    estimatedResult: electricalResultsHeadline.textContent + " | " + electricalKeyFinding.textContent + " | " + electricalCostTimeline.textContent,
+                    sendToBayAreaPanels: document.getElementById('sendToBayAreaPanels').checked // Should always be true and disabled
+                };
+
+                console.log('Electrical Lead Captured:', formData);
+                showMessage("Thank you! Your request has been sent to Bay Area Panels. They will contact you shortly to schedule your free electrical inspection.");
+                setTimeout(() => { modals.electrical.classList.remove('show'); resetCalculatorState('electrical'); }, 3500);
+            });
+
+            // --- KITCHEN REMODEL CALCULATOR LOGIC ---
+            calculateKitchenButton.addEventListener('click', () => {
+                const size = document.getElementById('kitchenSize').value;
+                const finish = document.getElementById('kitchenFinish').value;
+                const countertop = document.getElementById('countertopMaterial').value;
+                const appliances = document.getElementById('newAppliances').value;
+
+                let costMin = 0;
+                let costMax = 0;
+                let finding = "Estimated cost for your kitchen remodel.";
+                let timeline = "6-12 weeks";
+
+                // Base costs
+                if (size === 'small') { costMin += 25000; costMax += 50000; }
+                else if (size === 'medium') { costMin += 50000; costMax += 100000; }
+                else if (size === 'large') { costMin += 100000; costMax += 180000; }
+
+                // Finish level adjustment
+                if (finish === 'mid-range') { costMin *= 1.2; costMax *= 1.5; }
+                else if (finish === 'luxury') { costMin *= 1.8; costMax *= 2.5; }
+
+                // Countertop adjustment
+                if (countertop === 'quartz-granite') { costMin += 3000; costMax += 8000; }
+                else if (countertop === 'marble') { costMin += 8000; costMax += 15000; }
+
+                // Appliances adjustment
+                if (appliances === 'mid-range') { costMin += 5000; costMax += 10000; }
+                else if (appliances === 'high-end') { costMin += 10000; costMax += 25000; }
+
+                // Round to nearest hundred for simplicity
+                costMin = Math.round(costMin / 1000) * 1000;
+                costMax = Math.round(costMax / 1000) * 1000;
+
+
+                kitchenResultsHeadline.textContent = `Your Kitchen Remodel Estimate!`;
+                kitchenKeyFinding.textContent = finding;
+                kitchenCostTimeline.textContent = `Estimated Cost: $${costMin.toLocaleString()}-$${costMax.toLocaleString()}. Typical Timeline: ${timeline}.`;
+                kitchenWalnutCreekTip.textContent = "High-end kitchen remodels can be more costly in Walnut Creek due to demand and material quality. Major kitchen remodels often require electrical panel upgrades, especially with new high-draw appliances.";
+
+                updateStepVisibility('kitchen', 2);
+            });
+
+            getKitchenQuoteButton.addEventListener('click', () => {
+                updateStepVisibility('kitchen', 3);
+            });
+
+            kitchenLeadCaptureForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = {
+                    fullName: document.getElementById('kitchenFullName').value,
+                    email: document.getElementById('kitchenEmail').value,
+                    phone: document.getElementById('kitchenPhone').value,
+                    address: document.getElementById('kitchenAddress').value,
+                    calculatorUsed: 'Kitchen Remodel',
+                    sendToBayAreaPanels: document.getElementById('kitchenSendToBayAreaPanels').checked,
+                    estimatedResult: kitchenResultsHeadline.textContent + " | " + kitchenKeyFinding.textContent + " | " + kitchenCostTimeline.textContent
+                };
+                console.log('Kitchen Lead Captured:', formData);
+                showMessage("Thank you! Your kitchen remodel request has been sent to our experts.");
+                setTimeout(() => { modals.kitchen.classList.remove('show'); resetCalculatorState('kitchen'); }, 3500);
+            });
+
+            // --- LANDSCAPE DESIGN CALCULATOR LOGIC ---
+            calculateLandscapeButton.addEventListener('click', () => {
+                const yardSize = parseInt(document.getElementById('yardSize').value);
+                const style = document.getElementById('landscapeStyle').value;
+                const featurePatioDeck = document.getElementById('featurePatioDeck').checked;
+                const featureOutdoorLighting = document.getElementById('featureOutdoorLighting').checked;
+                const featureIrrigation = document.getElementById('featureIrrigation').checked;
+                const featureOutdoorKitchen = document.getElementById('featureOutdoorKitchen').checked;
+
+                let costPerSqFtMin = 15;
+                let costPerSqFtMax = 30;
+                let additionalCost = 0;
+                let finding = "Estimated cost for your outdoor oasis.";
+                let timeline = "4-12 weeks";
+
+                // Adjust for style (simplified)
+                if (style === 'drought-tolerant') { /* slightly lower cost/sqft often */ }
+                else if (style === 'traditional') { /* slightly higher cost/sqft often */ }
+
+                // Feature costs
+                if (featurePatioDeck) additionalCost += 5000 + (yardSize * 0.05); // Base + per sq ft
+                if (featureOutdoorLighting) additionalCost += 2000;
+                if (featureIrrigation) additionalCost += 3000;
+                if (featureOutdoorKitchen) additionalCost += 8000;
+
+                let totalCostMin = (yardSize * costPerSqFtMin) + additionalCost;
+                let totalCostMax = (yardSize * costPerSqFtMax) + additionalCost;
+
+                totalCostMin = Math.round(totalCostMin / 1000) * 1000;
+                totalCostMax = Math.round(totalCostMax / 1000) * 1000;
+
+                landscapeResultsHeadline.textContent = `Your Landscape Design Estimate!`;
+                landscapeKeyFinding.textContent = finding;
+                landscapeCostTimeline.textContent = `Estimated Cost: $${totalCostMin.toLocaleString()}-$${totalCostMax.toLocaleString()}. Typical Timeline: ${timeline}.`;
+                landscapeWalnutCreekTip.textContent = "Walnut Creek properties benefit from fire-resistant landscaping and smart irrigation due to local regulations and climate. Water-wise gardening is key here. Larger projects, or those impacting drainage, may require a Site Development Permit from the City of Walnut Creek.";
+
+                updateStepVisibility('landscape', 2);
+            });
+
+            getLandscapeQuoteButton.addEventListener('click', () => {
+                updateStepVisibility('landscape', 3);
+            });
+
+            landscapeLeadCaptureForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = {
+                    fullName: document.getElementById('landscapeFullName').value,
+                    email: document.getElementById('landscapeEmail').value,
+                    phone: document.getElementById('landscapePhone').value,
+                    address: document.getElementById('landscapeAddress').value,
+                    calculatorUsed: 'Landscape Design',
+                    sendToBayAreaPanels: document.getElementById('landscapeSendToBayAreaPanels').checked,
+                    estimatedResult: landscapeResultsHeadline.textContent + " | " + landscapeKeyFinding.textContent + " | " + landscapeCostTimeline.textContent
+                };
+                console.log('Landscape Lead Captured:', formData);
+                showMessage("Thank you! Your landscaping request has been sent to our experts.");
+                setTimeout(() => { modals.landscape.classList.remove('show'); resetCalculatorState('landscape'); }, 3500);
+            });
+        });
+    </script>
+</body>
+</html>
