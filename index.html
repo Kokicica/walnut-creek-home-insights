@@ -91,6 +91,161 @@
         .message-box.show {
             opacity: 1;
         }
+        /* Styles for ADU calculator specific elements within the modal-content */
+        /* Reusing common modal-content, step-indicator, close-button for ADU calculator */
+        #aduCalculatorModal .modal-content h2 { /* Targeting the main title within ADU modal */
+            font-size: 2rem; /* Adjusted for overall consistency, original was 3xl */
+            font-weight: bold;
+            margin-bottom: 1.5rem; /* Adjusted from 6 for better spacing */
+            text-align: center;
+            color: #2a9d8f; /* Primary green color */
+        }
+        #aduCalculatorModal .modal-content label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.95rem; /* Slightly smaller than main page labels but larger than small for forms */
+        }
+        #aduCalculatorModal .modal-content input[type="number"],
+        #aduCalculatorModal .modal-content select {
+            width: 100%;
+            padding: 0.75rem; /* Adjusted for modals */
+            border: 1px solid #cbd5e0;
+            border-radius: 0.5rem; /* 8px rounded */
+            background-color: #edf2f7;
+            color: #4a5568;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' fill='%232d3748'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.7em top 50%;
+            background-size: 0.65em auto;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        #aduCalculatorModal .modal-content input[type="number"]:focus,
+        #aduCalculatorModal .modal-content select:focus {
+            outline: none;
+            border-color: #2a9d8f; /* Focus color */
+            box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.2); /* Focus ring */
+        }
+        #aduCalculatorModal .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem; /* 12px */
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        #aduCalculatorModal .checkbox-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.625rem 0.875rem; /* 10px 14px */
+            border: 1px solid #cbd5e0;
+            border-radius: 0.5rem; /* 8px */
+            background-color: #f7fafc;
+            transition: all 0.2s ease-in-out;
+            color: #4a5568;
+            font-weight: normal; /* Override more specific inter styles for checkboxes */
+        }
+        #aduCalculatorModal .checkbox-group input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 1.125rem; /* 18px */
+            height: 1.125rem; /* 18px */
+            border: 2px solid #a0aec0;
+            border-radius: 0.25rem; /* 4px */
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            vertical-align: middle;
+            flex-shrink: 0;
+            margin-right: 0.5rem; /* 8px */
+        }
+        #aduCalculatorModal .checkbox-group input[type="checkbox"]:checked {
+            background-color: #2a9d8f; /* Green on checked */
+            border-color: #2a9d8f;
+        }
+        #aduCalculatorModal .checkbox-group input[type="checkbox"]:checked::after {
+            content: '✓';
+            color: white;
+            font-size: 0.75rem; /* 12px */
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #aduCalculatorModal .checkbox-group label:hover {
+            background-color: #ebf8f7; /* Lighter green-tinted on hover */
+            border-color: #8ab17d;
+        }
+
+        #aduCalculatorModal .results-section {
+            background-color: #e6f6f5; /* Light green background for results */
+            border-radius: 0.75rem; /* 12px */
+            padding: 1.5rem; /* 24px */
+            margin-top: 2rem; /* 32px */
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        #aduCalculatorModal .results-section h2 {
+            color: #2a9d8f; /* Darker green for results heading */
+            font-size: 1.5rem; /* 2xl */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        #aduCalculatorModal .results-section .cost-display {
+            font-size: 2.25rem; /* 3xl */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #2a9d8f;
+        }
+        #aduCalculatorModal .results-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        #aduCalculatorModal .results-section li {
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+        #aduCalculatorModal .results-section li strong {
+            color: #2d3748;
+        }
+        #aduCalculatorModal .disclaimer {
+            font-size: 0.875rem;
+            color: #718096;
+            margin-top: 1.25rem;
+            text-align: center;
+        }
+        #aduCalculatorModal .calculate-button {
+            background-color: #f4a261; /* Orange button */
+            color: white;
+            padding: 0.875rem 1.5rem; /* 14px 24px */
+            border: none;
+            border-radius: 0.5rem; /* 8px */
+            font-size: 1.125rem; /* Larger font */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(244, 162, 97, 0.3);
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        #aduCalculatorModal .calculate-button:hover {
+            background-color: #e08c50; /* Darker orange on hover */
+            transform: translateY(-2px);
+        }
+        .form-section-title { /* For general calculator section titles within modals */
+            font-size: 1.25rem; /* xl */
+            font-weight: 600;
+            color: #2a9d8f;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -165,6 +320,14 @@
                     <i class="fas fa-tree text-5xl mb-4"></i>
                     <h3 class="text-2xl font-bold mb-2">Landscape Design</h3>
                     <p class="text-lg mb-6">Cost your outdoor oasis.</p>
+                    <button class="estimate-button bg-[#f4a261] text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:bg-orange-600 transition duration-300">Estimate Project</button>
+                </div>
+
+                <!-- NEW: ADU Expansion Calculator Card -->
+                <div class="calculator-card p-6 bg-[#8ab17d] text-white rounded-xl shadow-lg flex flex-col items-center text-center transition duration-300 transform hover:scale-[1.03] cursor-pointer" data-calculator="adu">
+                    <i class="fas fa-house-chimney-medical text-5xl mb-4"></i> <!-- Icon for ADU -->
+                    <h3 class="text-2xl font-bold mb-2">ADU Expansion</h3>
+                    <p class="text-lg mb-6">Estimate your ADU addition.</p>
                     <button class="estimate-button bg-[#f4a261] text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:bg-orange-600 transition duration-300">Estimate Project</button>
                 </div>
 
@@ -271,12 +434,14 @@
             <div id="electricalStep3" class="hidden">
                 <p class="mb-6 text-lg text-gray-600">Step 3 of 3: Connect with local experts.</p>
                 <h3 class="text-2xl font-bold mb-6 text-gray-800">Get a Free Electrical Inspection & Custom Quote from Bay Area Panels</h3>
-                <form id="electricalLeadCaptureForm">
-                    <div class="mb-4"><label for="electricalFullName" class="block text-gray-700 text-sm font-semibold mb-2">Full Name <span class="text-red-500">*</span></label><input type="text" id="electricalFullName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
-                    <div class="mb-4"><label for="electricalEmail" class="block text-gray-700 text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label><input type="email" id="electricalEmail" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
-                    <div class="mb-4"><label for="electricalPhone" class="block text-gray-700 text-sm font-semibold mb-2">Phone <span class="text-red-500">*</span></label><input type="tel" id="electricalPhone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
-                    <div class="mb-6"><label for="electricalAddress" class="block text-gray-700 text-sm font-semibold mb-2">Walnut Creek Project Address <span class="text-red-500">*</span></label><input type="text" id="electricalAddress" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
-                    <div class="mb-6 flex items-start"><input type="checkbox" id="sendToBayAreaPanels" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3 mt-1" checked disabled><label for="sendToBayAreaPanels" class="text-gray-800 font-medium">Yes, please send my details to Bay Area Panels to schedule my free inspection/quote.</label></div>
+                <form id="electricalLeadCaptureForm" action="https://formspree.io/f/mblypaer" method="POST">
+                    <div class="mb-4"><label for="electricalFullName" class="block text-gray-700 text-sm font-semibold mb-2">Full Name <span class="text-red-500">*</span></label><input type="text" id="electricalFullName" name="fullName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="electricalEmail" class="block text-gray-700 text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label><input type="email" id="electricalEmail" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="electricalPhone" class="block text-gray-700 text-sm font-semibold mb-2">Phone <span class="text-red-500">*</span></label><input type="tel" id="electricalPhone" name="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-6"><label for="electricalAddress" class="block text-gray-700 text-sm font-semibold mb-2">Walnut Creek Project Address <span class="text-red-500">*</span></label><input type="text" id="electricalAddress" name="address" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-6 flex items-start"><input type="checkbox" id="sendToBayAreaPanels" name="sendToBayAreaPanels" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3 mt-1" checked disabled><label for="sendToBayAreaPanels" class="text-gray-800 font-medium">Yes, please send my details to Bay Area Panels to schedule my free inspection/quote.</label></div>
+                    <input type="hidden" name="calculatorUsed" value="Electrical Health">
+                    <input type="hidden" name="estimatedResult" id="electricalEstimatedResult">
                     <button type="submit" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Connect Me with Bay Area Panels &rarr;</button>
                 </form>
             </div>
@@ -321,12 +486,14 @@
             <div id="kitchenStep3" class="hidden">
                 <p class="mb-6 text-lg text-gray-600">Step 3 of 3: Connect with local experts.</p>
                 <h3 class="text-2xl font-bold mb-6 text-gray-800">Get a Free Quote from Walnut Creek Remodelers</h3>
-                <form id="kitchenLeadCaptureForm">
-                    <div class="mb-4"><label for="kitchenFullName" class="block text-gray-700 text-sm font-semibold mb-2">Full Name <span class="text-red-500">*</span></label><input type="text" id="kitchenFullName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
-                    <div class="mb-4"><label for="kitchenEmail" class="block text-gray-700 text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label><input type="email" id="kitchenEmail" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
-                    <div class="mb-4"><label for="kitchenPhone" class="block text-gray-700 text-sm font-semibold mb-2">Phone</label><input type="tel" id="kitchenPhone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
-                    <div class="mb-6"><label for="kitchenAddress" class="block text-gray-700 text-sm font-semibold mb-2">Walnut Creek Project Address</label><input type="text" id="kitchenAddress" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
-                    <div class="mb-6 flex items-start"><input type="checkbox" id="kitchenSendToBayAreaPanels" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3 mt-1"><label for="kitchenSendToBayAreaPanels" class="text-gray-800 font-medium">Also send my details to Bay Area Panels (for electrical upgrade needs).</label></div>
+                <form id="kitchenLeadCaptureForm" action="https://formspree.io/f/mblypaer" method="POST">
+                    <div class="mb-4"><label for="kitchenFullName" class="block text-gray-700 text-sm font-semibold mb-2">Full Name <span class="text-red-500">*</span></label><input type="text" id="kitchenFullName" name="fullName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="kitchenEmail" class="block text-gray-700 text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label><input type="email" id="kitchenEmail" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="kitchenPhone" class="block text-gray-700 text-sm font-semibold mb-2">Phone</label><input type="tel" id="kitchenPhone" name="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
+                    <div class="mb-6"><label for="kitchenAddress" class="block text-gray-700 text-sm font-semibold mb-2">Walnut Creek Project Address</label><input type="text" id="kitchenAddress" name="address" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
+                    <div class="mb-6 flex items-start"><input type="checkbox" id="kitchenSendToBayAreaPanels" name="sendToBayAreaPanels" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3 mt-1"><label for="kitchenSendToBayAreaPanels" class="text-gray-800 font-medium">Also send my details to Bay Area Panels (for electrical upgrade needs).</label></div>
+                    <input type="hidden" name="calculatorUsed" value="Kitchen Remodel">
+                    <input type="hidden" name="estimatedResult" id="kitchenEstimatedResult">
                     <button type="submit" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Connect Me with Experts &rarr;</button>
                 </form>
             </div>
@@ -370,12 +537,138 @@
             <div id="landscapeStep3" class="hidden">
                 <p class="mb-6 text-lg text-gray-600">Step 3 of 3: Connect with local experts.</p>
                 <h3 class="text-2xl font-bold mb-6 text-gray-800">Get a Free Quote from Walnut Creek Landscapers</h3>
-                <form id="landscapeLeadCaptureForm">
-                    <div class="mb-4"><label for="landscapeFullName" class="block text-gray-700 text-sm font-semibold mb-2">Full Name <span class="text-red-500">*</span></label><input type="text" id="landscapeFullName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
-                    <div class="mb-4"><label for="landscapeEmail" class="block text-gray-700 text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label><input type="email" id="landscapeEmail" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
-                    <div class="mb-4"><label for="landscapePhone" class="block text-gray-700 text-sm font-semibold mb-2">Phone</label><input type="tel" id="landscapePhone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
-                    <div class="mb-6"><label for="landscapeAddress" class="block text-gray-700 text-sm font-semibold mb-2">Walnut Creek Project Address</label><input type="text" id="landscapeAddress" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
-                    <div class="mb-6 flex items-start"><input type="checkbox" id="landscapeSendToBayAreaPanels" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3 mt-1"><label for="landscapeSendToBayAreaPanels" class="text-gray-800 font-medium">Also send my details to Bay Area Panels (for outdoor lighting electrical needs).</label></div>
+                <form id="landscapeLeadCaptureForm" action="https://formspree.io/f/mblypaer" method="POST">
+                    <div class="mb-4"><label for="landscapeFullName" class="block text-gray-700 text-sm font-semibold mb-2">Full Name <span class="text-red-500">*</span></label><input type="text" id="landscapeFullName" name="fullName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="landscapeEmail" class="block text-gray-700 text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label><input type="email" id="landscapeEmail" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="landscapePhone" class="block text-gray-700 text-sm font-semibold mb-2">Phone</label><input type="tel" id="landscapePhone" name="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
+                    <div class="mb-6"><label for="landscapeAddress" class="block text-gray-700 text-sm font-semibold mb-2">Walnut Creek Project Address</label><input type="text" id="landscapeAddress" name="address" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
+                    <div class="mb-6 flex items-start"><input type="checkbox" id="landscapeSendToBayAreaPanels" name="sendToBayAreaPanels" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3 mt-1"><label for="landscapeSendToBayAreaPanels" class="text-gray-800 font-medium">Also send my details to Bay Area Panels (for outdoor lighting electrical needs).</label></div>
+                    <input type="hidden" name="calculatorUsed" value="Landscape Design">
+                    <input type="hidden" name="estimatedResult" id="landscapeEstimatedResult">
+                    <button type="submit" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Connect Me with Experts &rarr;</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: ADU Expansion Calculator Modal -->
+    <div id="aduCalculatorModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button" data-modal="adu">&times;</span>
+            <div class="step-indicator">
+                <div id="aduStep1Indicator" class="active"></div>
+                <!-- Although it's one step, keeping indicator for consistency -->
+            </div>
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">ADU Expansion Cost Calculator</h2>
+
+            <!-- ADU Calculator Inputs -->
+            <div id="aduStep1">
+                <p class="mb-6 text-lg text-gray-600">Estimate the cost of expanding your Accessory Dwelling Unit in the Bay Area.</p>
+
+                <div class="mb-6">
+                    <label for="aduType" class="block">Current ADU Type:</label>
+                    <select id="aduType" class="w-full">
+                        <option value="Attached Addition">Attached Addition</option>
+                        <option value="Garage Conversion">Garage Conversion (Existing foundation/walls may reduce cost)</option>
+                        <option value="Junior ADU">Junior ADU (Expansion of JADU within existing footprint)</option>
+                        <option value="Detached ADU">Detached ADU (New detached structure expansion)</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label for="squareFootage" class="block">Square Footage of New Rooms Being Added:</label>
+                    <input type="number" id="squareFootage" min="50" max="1000" value="300" placeholder="e.g., 300" class="w-full">
+                </div>
+
+                <div class="mb-6">
+                    <label for="finishLevel" class="block">Desired Finish Level:</label>
+                    <select id="finishLevel" class="w-full">
+                        <option value="Basic">Basic (Standard materials, functional)</option>
+                        <option value="Mid-Range">Mid-Range (Good quality materials, some custom touches)</option>
+                        <option value="High-End">High-End (Premium materials, custom designs, luxury finishes)</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block mb-2">Site Challenges:</label>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" name="aduSiteChallenges" value="Sloped Lot">
+                            <span>Sloped Lot</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="aduSiteChallenges" value="Limited Access">
+                            <span>Limited Access</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="aduSiteChallenges" value="Extensive Utility Runs">
+                            <span>Extensive Utility Runs</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="aduSiteChallenges" value="Drainage Issues">
+                            <span>Drainage Issues</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block mb-2">Additional Features:</label>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" name="aduAdditionalFeatures" value="Extra Bathroom">
+                            <span>Extra Bathroom</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="aduAdditionalFeatures" value="Laundry">
+                            <span>Laundry Hookups/Area</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="aduAdditionalFeatures" value="Deck/Patio">
+                            <span>Deck/Patio</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="aduAdditionalFeatures" value="Solar Panels">
+                            <span>Solar Panels (for new ADU space)</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="aduAdditionalFeatures" value="HighEfficiencyHVAC">
+                            <span>High-Efficiency HVAC</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button id="calculateAduCostBtn" class="calculate-button">Calculate Estimated Cost</button>
+            </div>
+
+            <!-- Results Section for ADU Calculator - Initially hidden -->
+            <div id="aduResults" class="results-section hidden">
+                <h2 class="results-section-title">Estimated ADU Expansion Costs:</h2>
+                <div id="aduCostRange" class="cost-display">$0 - $0</div>
+                <ul class="list-disc list-inside text-gray-700 mb-6 space-y-2">
+                    <li><strong>Average Price Per Square Foot (Added Space):</strong> <span id="aduAvgPriceSqFt">$0</span></li>
+                    <li><strong>Estimated Construction Timeline:</strong> <span id="aduTimeline">8-20 weeks</span></li>
+                    <li><strong>Estimated Permit & Soft Costs:</strong> <span id="aduPermitSoftCosts">$0 - $0</span></li>
+                </ul>
+                <h3 class="form-section-title mt-6 mb-2">Helpful Tip for Walnut Creek ADU Expansions:</h3>
+                <p id="aduWalnutCreekTip" class="disclaimer">
+                    In Walnut Creek, ADU expansions are subject to specific zoning and building codes. Always check the latest regulations on the City of Walnut Creek Planning Department website. Consulting with local contractors and architects who specialize in ADUs in the Bay Area is highly recommended for accurate bids and to navigate local permitting processes efficiently. Be aware of potential impact fees and specific setback requirements for additions.
+                </p>
+                <p class="disclaimer mt-6">
+                    <strong>Disclaimer:</strong> This calculator provides an *estimate* based on typical Bay Area construction costs and common factors. Actual costs can vary significantly due to specific site conditions, material fluctuations, contractor bids, and unforeseen issues. Always obtain multiple detailed bids from licensed local contractors.
+                </p>
+            </div>
+            <!-- ADU Lead Capture Form -->
+            <div id="aduStep2" class="hidden">
+                <p class="mb-6 text-lg text-gray-600">Step 2 of 2: Connect with local experts.</p>
+                <h3 class="text-2xl font-bold mb-6 text-gray-800">Get a Free ADU Expansion Quote</h3>
+                <form id="aduLeadCaptureForm" action="https://formspree.io/f/mblypaer" method="POST">
+                    <div class="mb-4"><label for="aduFullName" class="block text-gray-700 text-sm font-semibold mb-2">Full Name <span class="text-red-500">*</span></label><input type="text" id="aduFullName" name="fullName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="aduEmail" class="block text-gray-700 text-sm font-semibold mb-2">Email <span class="text-red-500">*</span></label><input type="email" id="aduEmail" name="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent" required></div>
+                    <div class="mb-4"><label for="aduPhone" class="block text-gray-700 text-sm font-semibold mb-2">Phone</label><input type="tel" id="aduPhone" name="phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
+                    <div class="mb-6"><label for="aduAddress" class="block text-gray-700 text-sm font-semibold mb-2">Walnut Creek Project Address</label><input type="text" id="aduAddress" name="address" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2a9d8f] focus:border-transparent"></div>
+                    <div class="mb-6 flex items-start"><input type="checkbox" id="aduSendToExperts" name="sendToExperts" class="h-5 w-5 text-[#2a9d8f] rounded focus:ring-[#2a9d8f] mr-3 mt-1" checked><label for="aduSendToExperts" class="text-gray-800 font-medium">Yes, please send my details to local ADU experts for a free quote.</label></div>
+                    <input type="hidden" name="calculatorUsed" value="ADU Expansion">
+                    <input type="hidden" name="estimatedResult" id="aduEstimatedResult">
                     <button type="submit" class="w-full bg-[#f4a261] text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition duration-300">Connect Me with Experts &rarr;</button>
                 </form>
             </div>
@@ -408,7 +701,8 @@
             const modals = {
                 electrical: document.getElementById('electricalCalculatorModal'),
                 kitchen: document.getElementById('kitchenCalculatorModal'),
-                landscape: document.getElementById('landscapeCalculatorModal')
+                landscape: document.getElementById('landscapeCalculatorModal'),
+                adu: document.getElementById('aduCalculatorModal') // Add ADU modal to tracking
             };
 
             const closeButtons = document.querySelectorAll('.modal-content .close-button');
@@ -469,6 +763,7 @@
             const electricalKeyFinding = document.getElementById('electricalKeyFinding');
             const electricalCostTimeline = document.getElementById('electricalCostTimeline');
             const electricalWalnutCreekTip = document.getElementById('electricalWalnutCreekTip');
+            const electricalEstimatedResultHidden = document.getElementById('electricalEstimatedResult'); // Hidden input for result
 
             const electricalHomeAge = document.getElementById('homeAge');
             const electricalPanelBrand = document.getElementById('panelBrand');
@@ -493,6 +788,7 @@
             const kitchenKeyFinding = document.getElementById('kitchenKeyFinding');
             const kitchenCostTimeline = document.getElementById('kitchenCostTimeline');
             const kitchenWalnutCreekTip = document.getElementById('kitchenWalnutCreekTip');
+            const kitchenEstimatedResultHidden = document.getElementById('kitchenEstimatedResult'); // Hidden input for result
 
             // Landscape Calculator Elements
             const landscapeStep1 = document.getElementById('landscapeStep1');
@@ -508,6 +804,26 @@
             const landscapeKeyFinding = document.getElementById('landscapeKeyFinding');
             const landscapeCostTimeline = document.getElementById('landscapeCostTimeline');
             const landscapeWalnutCreekTip = document.getElementById('landscapeWalnutCreekTip');
+            const landscapeEstimatedResultHidden = document.getElementById('landscapeEstimatedResult'); // Hidden input for result
+
+            // ADU Calculator Elements (NEW)
+            const aduStep1 = document.getElementById('aduStep1');
+            const aduStep2 = document.getElementById('aduStep2'); // ADU Lead Capture
+            const aduStep1Indicator = document.getElementById('aduStep1Indicator');
+            const aduStep2Indicator = document.getElementById('aduStep2Indicator'); // For ADU lead form step
+            const aduTypeSelect = document.querySelector('#aduCalculatorModal #aduType');
+            const squareFootageInput = document.querySelector('#aduCalculatorModal #squareFootage');
+            const finishLevelSelect = document.querySelector('#aduCalculatorModal #finishLevel');
+            const aduSiteChallengesCheckboxes = document.querySelectorAll('#aduCalculatorModal input[name="aduSiteChallenges"]');
+            const aduAdditionalFeaturesCheckboxes = document.querySelectorAll('#aduCalculatorModal input[name="aduAdditionalFeatures"]');
+            const calculateAduCostBtn = document.getElementById('calculateAduCostBtn');
+            const aduResults = document.getElementById('aduResults');
+            const aduCostRange = document.getElementById('aduCostRange');
+            const aduAvgPriceSqFt = document.getElementById('aduAvgPriceSqFt');
+            const aduTimeline = document.getElementById('aduTimeline');
+            const aduPermitSoftCosts = document.getElementById('aduPermitSoftCosts');
+            const aduLeadCaptureForm = document.getElementById('aduLeadCaptureForm'); // ADU Lead Capture Form
+            const aduEstimatedResultHidden = document.getElementById('aduEstimatedResult'); // Hidden input for result
 
 
             // Function to manage step visibility for a given calculator
@@ -527,23 +843,38 @@
                         s1 = landscapeStep1; s2 = landscapeStep2; s3 = landscapeStep3;
                         ind1 = landscapeStep1Indicator; ind2 = landscapeStep2Indicator; ind3 = landscapeStep3Indicator;
                         break;
+                    case 'adu':
+                        s1 = aduStep1; s2 = aduStep2; s3 = null; // ADU has 2 steps (input + lead capture)
+                        ind1 = aduStep1Indicator; ind2 = aduStep2Indicator; ind3 = null; // ADU has 2 indicators
+                        break;
                 }
 
-                [s1, s2, s3].forEach(el => el.classList.add('hidden'));
-                [ind1, ind2, ind3].forEach(el => el.classList.remove('active'));
+                // Hide all steps first
+                if (s1) s1.classList.add('hidden');
+                if (s2) s2.classList.add('hidden');
+                if (s3) s3.classList.add('hidden');
+
+                // Deactivate all indicators first
+                if (ind1) ind1.classList.remove('active');
+                if (ind2) ind2.classList.remove('active');
+                if (ind3) ind3.classList.remove('active');
 
                 if (stepNumber === 1) {
                     s1.classList.remove('hidden');
-                    ind1.classList.add('active');
+                    if (ind1) ind1.classList.add('active');
+                    // Ensure results are hidden when on step 1 (for ADU and others that display results after calc)
+                    if (calculatorType === 'adu') {
+                        aduResults.classList.add('hidden');
+                    }
                 } else if (stepNumber === 2) {
-                    s2.classList.remove('hidden');
-                    ind1.classList.add('active');
-                    ind2.classList.add('active');
+                    if (s2) s2.classList.remove('hidden');
+                    if (ind1) ind1.classList.add('active');
+                    if (ind2) ind2.classList.add('active');
                 } else if (stepNumber === 3) {
-                    s3.classList.remove('hidden');
-                    ind1.classList.add('active');
-                    ind2.classList.add('active');
-                    ind3.classList.add('active');
+                    if (s3) s3.classList.remove('hidden');
+                    if (ind1) ind1.classList.add('active');
+                    if (ind2) ind2.classList.add('active');
+                    if (ind3) ind3.classList.add('active');
                 }
             }
 
@@ -595,6 +926,19 @@
                         landscapeWalnutCreekTip.textContent = '';
                         landscapeLeadCaptureForm.reset();
                         document.getElementById('landscapeSendToBayAreaPanels').checked = false; // Ensure unchecked by default
+                        break;
+                    case 'adu': // NEW ADU reset logic
+                        aduTypeSelect.value = 'Attached Addition';
+                        squareFootageInput.value = '300';
+                        finishLevelSelect.value = 'Basic';
+                        aduSiteChallengesCheckboxes.forEach(cb => cb.checked = false);
+                        aduAdditionalFeaturesCheckboxes.forEach(cb => cb.checked = false);
+                        aduResults.classList.add('hidden'); // Crucial: Hide results on reset
+                        aduCostRange.textContent = '$0 - $0';
+                        aduAvgPriceSqFt.textContent = '$0';
+                        aduTimeline.textContent = '8-20 weeks';
+                        aduPermitSoftCosts.textContent = '$0 - $0';
+                        aduLeadCaptureForm.reset(); // Reset ADU lead form too
                         break;
                 }
                 updateStepVisibility(calculatorType, 1);
@@ -673,6 +1017,9 @@
                 electricalKeyFinding.textContent = finding;
                 electricalCostTimeline.textContent = `Estimated Cost: ${costRange}. Typical Timeline: ${timeline}.`;
                 electricalWalnutCreekTip.textContent = "Walnut Creek permits apply for most electrical panel upgrades and new circuit installations. Bay Area Panels handles compliance. A free inspection is highly recommended for an exact quote, safety assessment, and to discuss EV/Solar readiness for your Walnut Creek home.";
+                
+                // Set hidden field value for lead capture
+                electricalEstimatedResultHidden.value = electricalResultsHeadline.textContent + " | " + electricalKeyFinding.textContent + " | " + electricalCostTimeline.textContent;
 
                 updateStepVisibility('electrical', 2);
             });
@@ -684,22 +1031,33 @@
             electricalLeadCaptureForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                const formData = {
-                    fullName: document.getElementById('electricalFullName').value,
-                    email: document.getElementById('electricalEmail').value,
-                    phone: document.getElementById('electricalPhone').value,
-                    address: document.getElementById('electricalAddress').value,
-                    calculatorUsed: 'Electrical Health',
-                    userInterestLevel: document.querySelector('#electricalStep1 input[name="interestLevel"]:checked')?.value || 'not-specified',
-                    primaryReason: Array.from(document.querySelectorAll('#electricalStep1 input[name="reason"]:checked')).map(cb => cb.value === 'other' ? electricalReasonOtherText.value : cb.value),
-                    largeAppliances: Array.from(document.querySelectorAll('#electricalStep1 input[name="appliance"]:checked')).map(cb => cb.value),
-                    estimatedResult: electricalResultsHeadline.textContent + " | " + electricalKeyFinding.textContent + " | " + electricalCostTimeline.textContent,
-                    sendToBayAreaPanels: document.getElementById('sendToBayAreaPanels').checked // Should always be true and disabled
-                };
+                const form = e.target;
+                const formData = new FormData(form);
+                
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
 
-                console.log('Electrical Lead Captured:', formData);
-                showMessage("Thank you! Your request has been sent to Bay Area Panels. They will contact you shortly to schedule your free electrical inspection.");
-                setTimeout(() => { modals.electrical.classList.remove('show'); resetCalculatorState('electrical'); }, 3500);
+                    if (response.ok) {
+                        showMessage("Thank you! Your request has been sent to Bay Area Panels. They will contact you shortly to schedule your free electrical inspection.");
+                        setTimeout(() => { modals.electrical.classList.remove('show'); resetCalculatorState('electrical'); }, 3500);
+                    } else {
+                        const data = await response.json();
+                        if (data.errors) {
+                            showMessage('Submission Failed: ' + data.errors.map(error => error.message).join(', ') + '. Please try again.');
+                        } else {
+                            showMessage('Something went wrong with the submission. Please try again later.');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    showMessage('Network error. Please check your internet connection and try again.');
+                }
             });
 
             // --- KITCHEN REMODEL CALCULATOR LOGIC ---
@@ -741,6 +1099,9 @@
                 kitchenCostTimeline.textContent = `Estimated Cost: $${costMin.toLocaleString()}-$${costMax.toLocaleString()}. Typical Timeline: ${timeline}.`;
                 kitchenWalnutCreekTip.textContent = "High-end kitchen remodels can be more costly in Walnut Creek due to demand and material quality. Major kitchen remodels often require electrical panel upgrades, especially with new high-draw appliances.";
 
+                // Set hidden field value for lead capture
+                kitchenEstimatedResultHidden.value = kitchenResultsHeadline.textContent + " | " + kitchenKeyFinding.textContent + " | " + kitchenCostTimeline.textContent;
+
                 updateStepVisibility('kitchen', 2);
             });
 
@@ -750,18 +1111,34 @@
 
             kitchenLeadCaptureForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const formData = {
-                    fullName: document.getElementById('kitchenFullName').value,
-                    email: document.getElementById('kitchenEmail').value,
-                    phone: document.getElementById('kitchenPhone').value,
-                    address: document.getElementById('kitchenAddress').value,
-                    calculatorUsed: 'Kitchen Remodel',
-                    sendToBayAreaPanels: document.getElementById('kitchenSendToBayAreaPanels').checked,
-                    estimatedResult: kitchenResultsHeadline.textContent + " | " + kitchenKeyFinding.textContent + " | " + kitchenCostTimeline.textContent
-                };
-                console.log('Kitchen Lead Captured:', formData);
-                showMessage("Thank you! Your kitchen remodel request has been sent to our experts.");
-                setTimeout(() => { modals.kitchen.classList.remove('show'); resetCalculatorState('kitchen'); }, 3500);
+                
+                const form = e.target;
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        showMessage("Thank you! Your kitchen remodel request has been sent to our experts.");
+                        setTimeout(() => { modals.kitchen.classList.remove('show'); resetCalculatorState('kitchen'); }, 3500);
+                    } else {
+                        const data = await response.json();
+                        if (data.errors) {
+                            showMessage('Submission Failed: ' + data.errors.map(error => error.message).join(', ') + '. Please try again.');
+                        } else {
+                            showMessage('Something went wrong with the submission. Please try again later.');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    showMessage('Network error. Please check your internet connection and try again.');
+                }
             });
 
             // --- LANDSCAPE DESIGN CALCULATOR LOGIC ---
@@ -800,6 +1177,9 @@
                 landscapeCostTimeline.textContent = `Estimated Cost: $${totalCostMin.toLocaleString()}-$${totalCostMax.toLocaleString()}. Typical Timeline: ${timeline}.`;
                 landscapeWalnutCreekTip.textContent = "Walnut Creek properties benefit from fire-resistant landscaping and smart irrigation due to local regulations and climate. Water-wise gardening is key here. Larger projects, or those impacting drainage, may require a Site Development Permit from the City of Walnut Creek.";
 
+                // Set hidden field value for lead capture
+                landscapeEstimatedResultHidden.value = landscapeResultsHeadline.textContent + " | " + landscapeKeyFinding.textContent + " | " + landscapeCostTimeline.textContent;
+
                 updateStepVisibility('landscape', 2);
             });
 
@@ -809,18 +1189,168 @@
 
             landscapeLeadCaptureForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const formData = {
-                    fullName: document.getElementById('landscapeFullName').value,
-                    email: document.getElementById('landscapeEmail').value,
-                    phone: document.getElementById('landscapePhone').value,
-                    address: document.getElementById('landscapeAddress').value,
-                    calculatorUsed: 'Landscape Design',
-                    sendToBayAreaPanels: document.getElementById('landscapeSendToBayAreaPanels').checked,
-                    estimatedResult: landscapeResultsHeadline.textContent + " | " + landscapeKeyFinding.textContent + " | " + landscapeCostTimeline.textContent
-                };
-                console.log('Landscape Lead Captured:', formData);
-                showMessage("Thank you! Your landscaping request has been sent to our experts.");
-                setTimeout(() => { modals.landscape.classList.remove('show'); resetCalculatorState('landscape'); }, 3500);
+                
+                const form = e.target;
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        showMessage("Thank you! Your landscaping request has been sent to our experts.");
+                        setTimeout(() => { modals.landscape.classList.remove('show'); resetCalculatorState('landscape'); }, 3500);
+                    } else {
+                        const data = await response.json();
+                        if (data.errors) {
+                            showMessage('Submission Failed: ' + data.errors.map(error => error.message).join(', ') + '. Please try again.');
+                        } else {
+                            showMessage('Something went wrong with the submission. Please try again later.');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    showMessage('Network error. Please check your internet connection and try again.');
+                }
+            });
+
+            // --- ADU EXPANSION COST CALCULATOR LOGIC (NEW) ---
+            const aduCosts = {
+                baseCostPerSqFt: { min: 450, max: 700 },
+                aduTypeMultiplier: {
+                    "Attached Addition": { min: 1.0, max: 1.1 },
+                    "Garage Conversion": { min: 0.9, max: 1.05 },
+                    "Junior ADU": { min: 0.95, max: 1.05 },
+                    "Detached ADU": {min: 1.1, max: 1.3}
+                },
+                finishLevelMultiplier: {
+                    "Basic": { min: 0.8, max: 0.95 },
+                    "Mid-Range": { min: 1.0, max: 1.15 },
+                    "High-End": { min: 1.2, max: 1.5 }
+                },
+                siteChallengeCosts: {
+                    "Sloped Lot": { min: 20000, max: 60000 },
+                    "Limited Access": { min: 10000, max: 30000 },
+                    "Extensive Utility Runs": { min: 8000, max: 25000 },
+                    "Drainage Issues": { min: 5000, max: 20000 }
+                },
+                additionalFeatureCosts: {
+                    "Extra Bathroom": { min: 25000, max: 50000 },
+                    "Laundry": { min: 7000, max: 18000 },
+                    "Deck/Patio": { min: 10000, max: 30000 },
+                    "Solar Panels": { min: 15000, max: 35000 },
+                    "HighEfficiencyHVAC": { min: 8000, max: 20000 }
+                },
+                permitSoftCostPercentage: { min: 0.15, max: 0.25 }
+            };
+
+            calculateAduCostBtn.addEventListener('click', () => {
+                const aduType = aduTypeSelect.value;
+                const squareFootage = parseFloat(squareFootageInput.value);
+                const finishLevel = finishLevelSelect.value;
+
+                if (isNaN(squareFootage) || squareFootage <= 0) {
+                    showMessage('Please enter a valid positive number for square footage.');
+                    aduResults.classList.add('hidden'); // Hide results if input is invalid
+                    return;
+                }
+
+                let totalConstructionCostMin = 0;
+                let totalConstructionCostMax = 0;
+
+                const baseSqFtCostMin = aduCosts.baseCostPerSqFt.min;
+                const baseSqFtCostMax = aduCosts.baseCostPerSqFt.max;
+
+                const finishMultMin = aduCosts.finishLevelMultiplier[finishLevel].min;
+                const finishMultMax = aduCosts.finishLevelMultiplier[finishLevel].max;
+
+                const aduTypeMultMin = aduCosts.aduTypeMultiplier[aduType].min;
+                const aduTypeMultMax = aduCosts.aduTypeMultiplier[aduType].max;
+
+                const sqFtConstructionMin = squareFootage * baseSqFtCostMin * finishMultMin * aduTypeMultMin;
+                const sqFtConstructionMax = squareFootage * baseSqFtCostMax * finishMultMax * aduTypeMultMax;
+
+                totalConstructionCostMin += sqFtConstructionMin;
+                totalConstructionCostMax += sqFtConstructionMax;
+
+                aduSiteChallengesCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const challenge = checkbox.value;
+                        totalConstructionCostMin += aduCosts.siteChallengeCosts[challenge].min;
+                        totalConstructionCostMax += aduCosts.siteChallengeCosts[challenge].max;
+                    }
+                });
+
+                aduAdditionalFeaturesCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const feature = checkbox.value;
+                        totalConstructionCostMin += aduCosts.additionalFeatureCosts[feature].min;
+                        totalConstructionCostMax += aduCosts.additionalFeatureCosts[feature].max;
+                    }
+                });
+
+                const permitSoftMin = totalConstructionCostMin * aduCosts.permitSoftCostPercentage.min;
+                const permitSoftMax = totalConstructionCostMax * aduCosts.permitSoftCostPercentage.max;
+
+                const finalCostMin = totalConstructionCostMin + permitSoftMin;
+                const finalCostMax = totalConstructionCostMax + permitSoftMax;
+
+                const avgPricePerSqFtMin = finalCostMin / squareFootage;
+                const avgPricePerSqFtMax = finalCostMax / squareFootage;
+
+                aduCostRange.textContent = `${formatCurrency(finalCostMin)} - ${formatCurrency(finalCostMax)}`;
+                aduAvgPriceSqFt.textContent = `${formatCurrency(avgPricePerSqFtMin)} - ${formatCurrency(avgPricePerSqFtMax)}`;
+                aduTimeline.textContent = `Approximately 8-20 weeks for construction (does not include design/permitting phase which can be 4-12 weeks)`;
+                aduPermitSoftCosts.textContent = `${formatCurrency(permitSoftMin)} - ${formatCurrency(permitSoftMax)}`;
+
+                aduEstimatedResultHidden.value = `Cost: ${aduCostRange.textContent} | Avg Price/SqFt: ${aduAvgPriceSqFt.textContent} | Timeline: ${aduTimeline.textContent} | Permits: ${aduPermitSoftCosts.textContent}`;
+
+                aduResults.classList.remove('hidden'); // Show results section
+                
+                // Show ADU lead capture form after calculation
+                updateStepVisibility('adu', 2); // Move to the lead capture "step"
+            });
+            
+            aduLeadCaptureForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const form = e.target;
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        showMessage("Thank you! Your ADU expansion request has been sent to our experts.");
+                        setTimeout(() => { modals.adu.classList.remove('show'); resetCalculatorState('adu'); }, 3500);
+                    } else {
+                        const data = await response.json();
+                        if (data.errors) {
+                            showMessage('Submission Failed: ' + data.errors.map(error => error.message).join(', ') + '. Please try again.');
+                        } else {
+                            showMessage('Something went wrong with the submission. Please try again later.');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error submitting form:', error);
+                    showMessage('Network error. Please check your internet connection and try again.');
+                }
+            });
+
+            // Initial setup when page loads: ensure all modals are hidden and calculators reset
+            Object.keys(modals).forEach(type => {
+                resetCalculatorState(type);
             });
         });
     </script>
